@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import testproject.demo.dto.UserDto;
 import testproject.demo.entities.User;
+
 import static junit.framework.TestCase.assertEquals;
 import static org.mockito.Mockito.when;
 
@@ -39,7 +40,7 @@ public class UserControllerImplTest {
     }
 
     @Test
-    public void addNewUser_ShouldReturnHttpStatusCREATED(){
+    public void addNewUser_ShouldReturnHttpStatusCREATED() {
         User userEntity = new User();
         userEntity.setUsername(username);
         userEntity.setPassword(password);
@@ -57,7 +58,7 @@ public class UserControllerImplTest {
     }
 
     @Test
-    public void updateUser_ShouldReturnHttpStatusOK(){
+    public void updateUser_ShouldReturnHttpStatusOK() {
         User userEntity = new User();
         userEntity.setUsername(username);
         userEntity.setPassword(password);
@@ -87,7 +88,7 @@ public class UserControllerImplTest {
     }
 
     @Test
-    public void updateUser_ShouldReturnHttpStatusNotFound(){
+    public void updateUser_ShouldReturnHttpStatusNotFound() {
         User userEntity = new User();
         userEntity.setUsername(username);
         userEntity.setPassword(password);
@@ -107,7 +108,7 @@ public class UserControllerImplTest {
     }
 
     @Test
-    public void deleteUserById_ShouldReturnHttpStatusOK(){
+    public void deleteUserById_ShouldReturnHttpStatusOK() {
         User userEntity = new User();
         userEntity.setUsername(username);
         userEntity.setPassword(password);
@@ -127,7 +128,7 @@ public class UserControllerImplTest {
     }
 
     @Test
-    public void deleteUserById_ShouldReturnHttpStatusNotFound(){
+    public void deleteUserById_ShouldReturnHttpStatusNotFound() {
         User userEntity = new User();
         userEntity.setUsername(username);
         userEntity.setPassword(password);

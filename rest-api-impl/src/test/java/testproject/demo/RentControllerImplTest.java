@@ -14,7 +14,6 @@ import testproject.demo.dto.RentDto;
 import testproject.demo.entities.Rent;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.*;

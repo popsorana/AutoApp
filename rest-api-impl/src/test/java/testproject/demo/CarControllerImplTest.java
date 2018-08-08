@@ -11,8 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import testproject.demo.dto.CarDto;
 import testproject.demo.entities.Car;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import static junit.framework.TestCase.assertEquals;
 import static org.mockito.Mockito.when;
 
@@ -27,7 +29,7 @@ public class CarControllerImplTest {
 
     private String transmission = "MANUAL";
     private String fuel = "DIESEL";
-    private String brand= "VW GOLF";
+    private String brand = "VW GOLF";
     private String licenseplate = "BH01SEA";
 
     @Before
@@ -36,8 +38,7 @@ public class CarControllerImplTest {
     }
 
     @Test
-    public void showAvailableCars_shouldReturnANonEmptyList()
-    {
+    public void showAvailableCars_shouldReturnANonEmptyList() {
         List<CarDto> cars = new ArrayList<>();
 
         Car carEntity = new Car();
@@ -56,7 +57,7 @@ public class CarControllerImplTest {
     }
 
     @Test
-    public void addNewCar_ShouldReturnHttpStatusCREATED(){
+    public void addNewCar_ShouldReturnHttpStatusCREATED() {
         Car carEntity = new Car();
         carEntity.setBrand(brand);
         carEntity.setFuel(fuel);
@@ -70,7 +71,21 @@ public class CarControllerImplTest {
     }
 
     @Test
-    public void deleteCarById_ShouldReturnHttpStatusOK(){
+    public void addNewCar_ShouldReturnHttpStatusNotAcceptable() {
+        Car carEntity = new Car();
+        carEntity.setBrand(brand);
+        carEntity.setFuel(fuel);
+        carEntity.setTransmission(transmission);
+        carEntity.setLicenseplate(licenseplate);
+
+        ResponseEntity result = carControllerImpl.addNewCar(null);
+
+        ResponseEntity expected = new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void deleteCarById_ShouldReturnHttpStatusOK() {
 
         Car carEntity = new Car();
         carEntity.setBrand(brand);
@@ -87,7 +102,7 @@ public class CarControllerImplTest {
     }
 
     @Test
-    public void deleteCarById_ShouldReturnHttpStatusNotFound(){
+    public void deleteCarById_ShouldReturnHttpStatusNotFound() {
 
         Car carEntity = new Car();
         carEntity.setBrand(brand);
@@ -105,23 +120,22 @@ public class CarControllerImplTest {
     }
 
     @Test
-    public void updateCar_ShouldReturnHttpStatusOK(){
+    public void updateCar_ShouldReturnHttpStatusOK() {
         Car carEntity = new Car();
         carEntity.setBrand(brand);
         carEntity.setFuel(fuel);
-        carEntity.setId(5L);
         carEntity.setTransmission(transmission);
         carEntity.setLicenseplate(licenseplate);
 
-        CarDto carDto = new CarDto();;
-        carEntity.setBrand(brand);
-        carEntity.setFuel(fuel);
-        carEntity.setId(5L);
-        carEntity.setTransmission(transmission);
-        carEntity.setLicenseplate(licenseplate);
-        when(carServiceMock.CarIdExists(5L)).thenReturn(true);
+        CarDto carDto = new CarDto();
+        ;
+        carEntity.setBrand("AUDI");
+        carEntity.setFuel("PETROL");
+        carEntity.setTransmission("MANUAL");
+        carEntity.setLicenseplate("BH43JKN");
+        when(carServiceMock.CarIdExists(carEntity.getId())).thenReturn(true);
 
-        ResponseEntity result = carControllerImpl.updateCar(5L, carDto);
+        ResponseEntity result = carControllerImpl.updateCar(carEntity.getId(), carDto);
 
         ResponseEntity expected = new ResponseEntity(HttpStatus.OK);
         assertEquals(expected, result);
@@ -129,16 +143,21 @@ public class CarControllerImplTest {
     }
 
     @Test
-    public void updateCar_ShouldReturnHttpStatusNotFound(){
+    public void updateCar_ShouldReturnHttpStatusNotFound() {
         Car carEntity = new Car();
         carEntity.setBrand(brand);
         carEntity.setFuel(fuel);
-        carEntity.setId(5L);
         carEntity.setTransmission(transmission);
         carEntity.setLicenseplate(licenseplate);
-        when(carServiceMock.CarIdExists(5L)).thenReturn(true);
 
-        ResponseEntity result = carControllerImpl.updateCar(4L, carEntity.toDto());
+        CarDto carDto = new CarDto();
+        ;
+        carEntity.setBrand("AUDI");
+        carEntity.setFuel("PETROL");
+        carEntity.setTransmission("MANUAL");
+        carEntity.setLicenseplate("BH43JKN");
+
+        ResponseEntity result = carControllerImpl.updateCar(carEntity.getId(), carDto);
 
         ResponseEntity expected = new ResponseEntity(HttpStatus.NOT_FOUND);
         assertEquals(expected, result);

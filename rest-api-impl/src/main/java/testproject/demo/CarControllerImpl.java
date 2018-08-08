@@ -23,8 +23,11 @@ public class CarControllerImpl implements CarController {
 
     @PostMapping("/add")
     public ResponseEntity addNewCar(@RequestBody CarDto carDto) {
-        carService.addCarDTO(carDto);
-        return new ResponseEntity(HttpStatus.CREATED);
+        if (carDto != null) {
+            carService.addCarDTO(carDto);
+            return new ResponseEntity(HttpStatus.CREATED);
+        }
+        return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
     }
 
     @DeleteMapping("/delete/{carId}")
@@ -37,7 +40,7 @@ public class CarControllerImpl implements CarController {
     }
 
     @PutMapping("/edit/{carId}")
-    public ResponseEntity<CarDto> updateCar(@PathVariable("carId") Long carId, @RequestBody CarDto carDto) {
+    public ResponseEntity<CarDto> updateCar(@PathVariable Long carId, @RequestBody CarDto carDto) {
         if (carService.CarIdExists(carId)) {
             carService.updateCarDTO(carId, carDto);
             return new ResponseEntity<>(HttpStatus.OK);

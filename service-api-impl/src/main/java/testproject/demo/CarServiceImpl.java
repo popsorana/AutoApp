@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import testproject.demo.dto.CarDto;
 import testproject.demo.entities.Car;
 import testproject.demo.repository.CarRepository;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,11 +16,11 @@ public class CarServiceImpl implements CarService {
     private CarRepository carRepository;
 
     @Override
-    public void addCarDTO(CarDto carDto) {
+    public Car addCarDTO(CarDto carDto) {
         Car entity = new Car();
         carDto.setAvailability(true);
         entity.Update(carDto);
-        carRepository.save(entity);
+        return carRepository.save(entity);
     }
 
     @Override
@@ -32,23 +33,19 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public void deleteCarDTO(Long carId) {
-        carRepository.findAll().forEach(car -> {
-            carRepository.deleteById(carId);
-        });
+        carRepository.deleteById(carId);
     }
 
     @Override
-    public void updateCarDTO(Long carId, CarDto carDto) {
-        carRepository.findById(carId);
-        Car entity = new Car();
+    public Car updateCarDTO(Long carId, CarDto carDto) {
+        Car entity = carRepository.findById(carId).get();
+        carDto.setAvailability(true);
         entity.Update(carDto);
-        carRepository.save(entity);
+        return carRepository.save(entity);
     }
 
     @Override
     public boolean CarIdExists(Long carId) {
         return carRepository.findById(carId).isPresent();
     }
-
-
 }

@@ -15,8 +15,8 @@ public class UserControllerImpl implements UserController {
 
     @PostMapping("/add")
     public ResponseEntity addNewUser(@RequestBody UserDto userDto) {
-            userService.addUserDTO(userDto);
-            return new ResponseEntity(HttpStatus.CREATED);
+        userService.addUserDTO(userDto);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
     @PutMapping("/edit/{userId}")
