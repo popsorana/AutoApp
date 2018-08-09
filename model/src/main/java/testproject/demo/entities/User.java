@@ -2,9 +2,9 @@ package testproject.demo.entities;
 
 import testproject.demo.dto.UserDto;
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
-@Table(name="users")
 public class User {
 
     @Id
@@ -19,6 +19,12 @@ public class User {
     private int age;
     private String country;
     private String city;
+
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
+    private List<Rent> rents;
+
+    @ManyToOne
+    private Role role;
 
     public long getId() { return id; }
 
@@ -55,6 +61,18 @@ public class User {
     public String getCity() { return city; }
 
     public void setCity(String city) { this.city = city; }
+
+    public List<Rent> getRents() {
+        return rents;
+    }
+
+    public void setRents(List<Rent> rents) {
+        this.rents = rents;
+    }
+
+    public Role getRole() { return role; }
+
+    public void setRole(Role role) { this.role = role; }
 
     public UserDto toDto() {
         UserDto dto = new UserDto();

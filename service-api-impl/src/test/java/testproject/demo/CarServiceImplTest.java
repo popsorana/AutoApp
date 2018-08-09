@@ -28,23 +28,14 @@ public class CarServiceImplTest {
     @Mock
     private CarRepository carRepositoryMock;
 
-    private String transmission = "MANUAL";
-    private String fuel = "DIESEL";
-    private String brand = "VW GOLF";
-    private String licenseplate = "BH01SEA";
-
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
     }
 
     @Test
-    public void addCarDTO_ShouldReturnHttpStatusOK() {
+    public void addCarDTO_ShouldReturnASavedCarDTO() {
         Car carEntity = new Car();
-        carEntity.setBrand(brand);
-        carEntity.setFuel(fuel);
-        carEntity.setTransmission(transmission);
-        carEntity.setLicenseplate(licenseplate);
 
         Car result = carServiceImpl.addCarDTO(carEntity.toDto());
 
@@ -55,16 +46,9 @@ public class CarServiceImplTest {
     @Test
     public void showAllAvailableCarsDTO_ShouldReturnANonEmptyList() {
         Car carEntity_1 = new Car();
-        carEntity_1.setBrand(brand);
-        carEntity_1.setFuel(fuel);
-        carEntity_1.setTransmission(transmission);
-        carEntity_1.setLicenseplate(licenseplate);
 
         Car carEntity_2 = new Car();
-        carEntity_2.setBrand("AUDI");
-        carEntity_2.setFuel("PETROL");
-        carEntity_2.setTransmission("MANUAL");
-        carEntity_2.setLicenseplate("BH87FJS");
+
         List<Car> carEntities = Arrays.asList(carEntity_1, carEntity_2);
         when(carRepositoryMock.findAll()).thenReturn(carEntities);
 
@@ -72,20 +56,11 @@ public class CarServiceImplTest {
 
         assertEquals(2, result.size());
 
-        CarDto expected_1 = result.get(0);
-        CarDto expected_2 = result.get(1);
-
-        assertEquals(brand, expected_1.getBrand());
-        assertEquals("AUDI", expected_2.getBrand());
     }
 
     @Test
     public void deleteCarDTO_ShouldVerifyIfCalled() {
         Car carEntity = new Car();
-        carEntity.setBrand(brand);
-        carEntity.setFuel(fuel);
-        carEntity.setTransmission(transmission);
-        carEntity.setLicenseplate(licenseplate);
 
         carRepositoryMock.findById(carEntity.getId());
 
@@ -97,16 +72,9 @@ public class CarServiceImplTest {
     @Test
     public void updateCarDTO_ShouldVerifyIfCalled() {
         Car carEntity = new Car();
-        carEntity.setBrand(brand);
-        carEntity.setFuel(fuel);
-        carEntity.setTransmission(transmission);
-        carEntity.setLicenseplate(licenseplate);
 
         CarDto carDto = new CarDto();
-        carDto.setBrand("AUDI");
-        carDto.setFuel("PETROL");
-        carDto.setLicenseplate("BH73IMF");
-        carDto.setTransmission("MANUAL");
+
         when(carRepositoryMock.findById(carEntity.getId())).thenReturn(Optional.of(carEntity));
         Car result = carServiceImpl.updateCarDTO(carEntity.getId(), carDto);
 
@@ -118,10 +86,6 @@ public class CarServiceImplTest {
     @Test
     public void CarIdExists_ShouldReturnTrue() {
         Car carEntity = new Car();
-        carEntity.setBrand(brand);
-        carEntity.setFuel(fuel);
-        carEntity.setTransmission(transmission);
-        carEntity.setLicenseplate(licenseplate);
 
         boolean result = carServiceImpl.CarIdExists(carEntity.getId());
 

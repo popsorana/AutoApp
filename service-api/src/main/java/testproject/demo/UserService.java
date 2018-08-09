@@ -2,13 +2,14 @@ package testproject.demo;
 
 import org.springframework.stereotype.Service;
 import testproject.demo.dto.UserDto;
+import testproject.demo.entities.User;
 
 @Service
 public interface UserService {
 
-    void addUserDTO(UserDto userDto);
+    User addUserDTO(UserDto userDto);
 
-    void updateUserDTO(Long userId, UserDto userDto);
+    User updateUserDTO(Long userId, UserDto userDto);
 
     void deleteUserDTO(Long userId);
 

@@ -3,9 +3,9 @@ package testproject.demo.entities;
 import testproject.demo.dto.LocationDto;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
-@Table(name="locations")
 public class Location {
 
     @Id
@@ -17,6 +17,9 @@ public class Location {
     private String zipcode;
     private String city;
     private String state;
+
+    @OneToMany(mappedBy = "locationId", cascade = CascadeType.ALL)
+    private List<Rent> rents;
 
     public long getId() { return id; }
 
@@ -37,6 +40,22 @@ public class Location {
     public String getCity() { return city; }
 
     public void setCity(String city) { this.city = city; }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public List<Rent> getRents() {
+        return rents;
+    }
+
+    public void setRents(List<Rent> rents) {
+        this.rents = rents;
+    }
 
     public LocationDto toDto() {
         LocationDto dto = new LocationDto();

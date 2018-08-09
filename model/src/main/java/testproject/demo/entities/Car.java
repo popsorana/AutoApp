@@ -2,9 +2,9 @@ package testproject.demo.entities;
 
 import testproject.demo.dto.CarDto;
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
-@Table(name="cars")
 public class Car{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,6 +15,9 @@ public class Car{
     private String transmission;
     private String brand;
     private boolean availability;
+
+    @OneToMany(mappedBy = "carId", cascade = CascadeType.ALL)
+    private List<Rent> rents;
 
     public long getId() { return id; }
 
@@ -39,6 +42,12 @@ public class Car{
     public boolean isAvailable() { return availability; }
 
     public void setAvailability(boolean availability) { this.availability = availability; }
+
+    public List<Rent> getRents() { return rents; }
+
+    public void setRents(List<Rent> rents) { this.rents = rents; }
+
+    public boolean isAvailability() { return availability; }
 
     public CarDto toDto() {
         CarDto dto = new CarDto();

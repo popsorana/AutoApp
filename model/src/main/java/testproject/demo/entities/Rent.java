@@ -4,23 +4,25 @@ import testproject.demo.dto.RentDto;
 import javax.persistence.*;
 
 @Entity
-@Table(name="rents")
 public class Rent {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @ManyToOne
+    @ManyToOne()
+    @JoinColumn(name = "car_id_id")
     private Car carId;
 
-    @ManyToOne
+    @ManyToOne()
+    @JoinColumn(name = "user_id_id")
     private User userId;
 
     private String startDate;
     private String endDate;
-    private long price;
+    private int price;
 
-    @ManyToOne
+    @ManyToOne()
+    @JoinColumn(name = "location_id_id")
     private Location locationId;
 
     public long getId() { return id; }
@@ -43,9 +45,9 @@ public class Rent {
 
     public void setEndDate(String endDate) { this.endDate = endDate; }
 
-    public long getPrice() { return price; }
+    public int getPrice() { return price; }
 
-    public void setPrice(long price) { this.price = price; }
+    public void setPrice(int price) { this.price = price; }
 
     public Location getLocationId() { return locationId; }
 

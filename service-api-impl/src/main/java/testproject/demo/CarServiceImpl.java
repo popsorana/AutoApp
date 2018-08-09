@@ -39,7 +39,6 @@ public class CarServiceImpl implements CarService {
     @Override
     public Car updateCarDTO(Long carId, CarDto carDto) {
         Car entity = carRepository.findById(carId).get();
-        carDto.setAvailability(true);
         entity.Update(carDto);
         return carRepository.save(entity);
     }

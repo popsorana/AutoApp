@@ -27,11 +27,6 @@ public class CarControllerImplTest {
     @Mock
     private CarService carServiceMock;
 
-    private String transmission = "MANUAL";
-    private String fuel = "DIESEL";
-    private String brand = "VW GOLF";
-    private String licenseplate = "BH01SEA";
-
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
@@ -42,10 +37,6 @@ public class CarControllerImplTest {
         List<CarDto> cars = new ArrayList<>();
 
         Car carEntity = new Car();
-        carEntity.setBrand(brand);
-        carEntity.setFuel(fuel);
-        carEntity.setTransmission(transmission);
-        carEntity.setLicenseplate(licenseplate);
 
         cars.add(carEntity.toDto());
         when(carServiceMock.showAvailableCarsDTO()).thenReturn(cars);
@@ -59,10 +50,6 @@ public class CarControllerImplTest {
     @Test
     public void addNewCar_ShouldReturnHttpStatusCREATED() {
         Car carEntity = new Car();
-        carEntity.setBrand(brand);
-        carEntity.setFuel(fuel);
-        carEntity.setTransmission(transmission);
-        carEntity.setLicenseplate(licenseplate);
 
         ResponseEntity result = carControllerImpl.addNewCar(carEntity.toDto());
 
@@ -73,10 +60,6 @@ public class CarControllerImplTest {
     @Test
     public void addNewCar_ShouldReturnHttpStatusNotAcceptable() {
         Car carEntity = new Car();
-        carEntity.setBrand(brand);
-        carEntity.setFuel(fuel);
-        carEntity.setTransmission(transmission);
-        carEntity.setLicenseplate(licenseplate);
 
         ResponseEntity result = carControllerImpl.addNewCar(null);
 
@@ -88,14 +71,10 @@ public class CarControllerImplTest {
     public void deleteCarById_ShouldReturnHttpStatusOK() {
 
         Car carEntity = new Car();
-        carEntity.setBrand(brand);
-        carEntity.setFuel(fuel);
-        carEntity.setId(5L);
-        carEntity.setTransmission(transmission);
-        carEntity.setLicenseplate(licenseplate);
-        when(carServiceMock.CarIdExists(5L)).thenReturn(true);
 
-        ResponseEntity result = carControllerImpl.deleteCarById(5L);
+        when(carServiceMock.CarIdExists(carEntity.getId())).thenReturn(true);
+
+        ResponseEntity result = carControllerImpl.deleteCarById(carEntity.getId());
 
         ResponseEntity expected = new ResponseEntity(HttpStatus.OK);
         assertEquals(expected, result);
@@ -105,12 +84,8 @@ public class CarControllerImplTest {
     public void deleteCarById_ShouldReturnHttpStatusNotFound() {
 
         Car carEntity = new Car();
-        carEntity.setBrand(brand);
-        carEntity.setFuel(fuel);
-        carEntity.setId(5L);
-        carEntity.setTransmission(transmission);
-        carEntity.setLicenseplate(licenseplate);
-        when(carServiceMock.CarIdExists(5L)).thenReturn(true);
+
+        when(carServiceMock.CarIdExists(carEntity.getId())).thenReturn(true);
 
 
         ResponseEntity result = carControllerImpl.deleteCarById(3L);
@@ -122,17 +97,10 @@ public class CarControllerImplTest {
     @Test
     public void updateCar_ShouldReturnHttpStatusOK() {
         Car carEntity = new Car();
-        carEntity.setBrand(brand);
-        carEntity.setFuel(fuel);
-        carEntity.setTransmission(transmission);
-        carEntity.setLicenseplate(licenseplate);
+
 
         CarDto carDto = new CarDto();
-        ;
-        carEntity.setBrand("AUDI");
-        carEntity.setFuel("PETROL");
-        carEntity.setTransmission("MANUAL");
-        carEntity.setLicenseplate("BH43JKN");
+
         when(carServiceMock.CarIdExists(carEntity.getId())).thenReturn(true);
 
         ResponseEntity result = carControllerImpl.updateCar(carEntity.getId(), carDto);
@@ -145,17 +113,9 @@ public class CarControllerImplTest {
     @Test
     public void updateCar_ShouldReturnHttpStatusNotFound() {
         Car carEntity = new Car();
-        carEntity.setBrand(brand);
-        carEntity.setFuel(fuel);
-        carEntity.setTransmission(transmission);
-        carEntity.setLicenseplate(licenseplate);
 
         CarDto carDto = new CarDto();
-        ;
-        carEntity.setBrand("AUDI");
-        carEntity.setFuel("PETROL");
-        carEntity.setTransmission("MANUAL");
-        carEntity.setLicenseplate("BH43JKN");
+
 
         ResponseEntity result = carControllerImpl.updateCar(carEntity.getId(), carDto);
 

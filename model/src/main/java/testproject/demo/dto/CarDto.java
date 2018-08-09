@@ -1,5 +1,8 @@
 package testproject.demo.dto;
 
+import testproject.demo.entities.Car;
+
+
 public class CarDto {
 
     private String fuel;

@@ -9,6 +9,7 @@ public class UserDto {
     private int age;
     private String country;
     private String city;
+    private String role;
 
 
     public void setUsername(String username){ this.username = username; }
@@ -42,4 +43,8 @@ public class UserDto {
     public String getCity() { return city; }
 
     public void setCity(String city) { this.city = city; }
+
+    public String getRole() { return role; }
+
+    public void setRole(String role) { this.role = role; }
 }

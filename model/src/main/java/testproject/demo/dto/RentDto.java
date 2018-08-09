@@ -3,8 +3,10 @@ package testproject.demo.dto;
 public class RentDto {
     private String startDate;
     private String endDate;
-    private Long price;
-
+    private int price;
+    private Long carId;
+    private Long userId;
+    private Long locationId;
 
     public String getStartDate() { return startDate; }
 
@@ -14,8 +16,19 @@ public class RentDto {
 
     public void setEndDate(String endDate) { this.endDate = endDate; }
 
-    public long getPrice() { return price; }
+    public int getPrice() { return price; }
 
-    public void setPrice(Long price) { this.price = price; }
+    public void setPrice(int price) { this.price = price; }
 
+    public Long getCarId() { return carId; }
+
+    public void setCarId(Long carId) { this.carId = carId; }
+
+    public Long getUserId() { return userId; }
+
+    public void setUserId(Long userId) { this.userId = userId; }
+
+    public Long getLocationId() { return locationId; }
+
+    public void setLocationId(Long locationId) { this.locationId = locationId; }
 }

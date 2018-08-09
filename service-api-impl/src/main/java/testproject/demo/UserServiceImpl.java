@@ -13,25 +13,22 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public void addUserDTO(UserDto userDto) {
+    public User addUserDTO(UserDto userDto) {
         User entity = new User();
         entity.Update(userDto);
-        userRepository.save(entity);
+        return userRepository.save(entity);
     }
 
     @Override
-    public void updateUserDTO(Long userId, UserDto userDto) {
-        userRepository.findById(userId);
-        User entity = new User();
+    public User updateUserDTO(Long userId, UserDto userDto) {
+        User entity = userRepository.findById(userId).get();
         entity.Update(userDto);
-        userRepository.save(entity);
+        return userRepository.save(entity);
     }
 
     @Override
     public void deleteUserDTO(Long userId) {
-        userRepository.findAll().forEach(user -> {
-            userRepository.deleteById(userId);
-        });
+        userRepository.deleteById(userId);
     }
 
     @Override

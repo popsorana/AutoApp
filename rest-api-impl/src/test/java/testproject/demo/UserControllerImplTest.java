@@ -25,14 +25,6 @@ public class UserControllerImplTest {
     @Mock
     private UserService userServiceMock;
 
-    private String username = "JohnWest";
-    private String password = "pass";
-    private String firstName = "John";
-    private String lastName = "West";
-    private String email = "johnw@gmail.com";
-    private int age = 45;
-    private String country = "USA";
-    private String city = "New York";
 
     @Before
     public void setup() {
@@ -42,14 +34,6 @@ public class UserControllerImplTest {
     @Test
     public void addNewUser_ShouldReturnHttpStatusCREATED() {
         User userEntity = new User();
-        userEntity.setUsername(username);
-        userEntity.setPassword(password);
-        userEntity.setFirstName(firstName);
-        userEntity.setLastName(lastName);
-        userEntity.setEmail(email);
-        userEntity.setAge(age);
-        userEntity.setCountry(country);
-        userEntity.setCity(city);
 
         ResponseEntity result = userControllerImpl.addNewUser(userEntity.toDto());
 
@@ -58,30 +42,24 @@ public class UserControllerImplTest {
     }
 
     @Test
+    public void addNewUser_ShouldReturnHttpStatusNotAcceptable() {
+        User userEntity = new User();
+
+        ResponseEntity result = userControllerImpl.addNewUser(null);
+
+        ResponseEntity expected = new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
+        assertEquals(expected, result);
+    }
+
+    @Test
     public void updateUser_ShouldReturnHttpStatusOK() {
         User userEntity = new User();
-        userEntity.setUsername(username);
-        userEntity.setPassword(password);
-        userEntity.setFirstName(firstName);
-        userEntity.setLastName(lastName);
-        userEntity.setEmail(email);
-        userEntity.setAge(age);
-        userEntity.setCountry(country);
-        userEntity.setCity(city);
-        userEntity.setId(5L);
 
         UserDto userDto = new UserDto();
-        userDto.setUsername(username);
-        userDto.setPassword(password);
-        userDto.setFirstName(firstName);
-        userDto.setLastName(lastName);
-        userDto.setEmail(email);
-        userDto.setAge(age);
-        userDto.setCountry(country);
-        userDto.setCity(city);
-        when(userServiceMock.UserIdExists(5L)).thenReturn(true);
 
-        ResponseEntity result = userControllerImpl.updateUser(5L, userDto);
+        when(userServiceMock.UserIdExists(userEntity.getId())).thenReturn(true);
+
+        ResponseEntity result = userControllerImpl.updateUser(userEntity.getId(), userDto);
 
         ResponseEntity expected = new ResponseEntity(HttpStatus.OK);
         assertEquals(expected, result);
@@ -90,16 +68,8 @@ public class UserControllerImplTest {
     @Test
     public void updateUser_ShouldReturnHttpStatusNotFound() {
         User userEntity = new User();
-        userEntity.setUsername(username);
-        userEntity.setPassword(password);
-        userEntity.setFirstName(firstName);
-        userEntity.setLastName(lastName);
-        userEntity.setEmail(email);
-        userEntity.setAge(age);
-        userEntity.setCountry(country);
-        userEntity.setCity(city);
-        userEntity.setId(5L);
-        when(userServiceMock.UserIdExists(5L)).thenReturn(true);
+
+        when(userServiceMock.UserIdExists(userEntity.getId())).thenReturn(true);
 
         ResponseEntity result = userControllerImpl.updateUser(4L, userEntity.toDto());
 
@@ -110,18 +80,10 @@ public class UserControllerImplTest {
     @Test
     public void deleteUserById_ShouldReturnHttpStatusOK() {
         User userEntity = new User();
-        userEntity.setUsername(username);
-        userEntity.setPassword(password);
-        userEntity.setFirstName(firstName);
-        userEntity.setLastName(lastName);
-        userEntity.setEmail(email);
-        userEntity.setAge(age);
-        userEntity.setCountry(country);
-        userEntity.setCity(city);
-        userEntity.setId(5L);
-        when(userServiceMock.UserIdExists(5L)).thenReturn(true);
 
-        ResponseEntity result = userControllerImpl.deleteUserById(5L);
+        when(userServiceMock.UserIdExists(userEntity.getId())).thenReturn(true);
+
+        ResponseEntity result = userControllerImpl.deleteUserById(userEntity.getId());
 
         ResponseEntity expected = new ResponseEntity(HttpStatus.OK);
         assertEquals(expected, result);
@@ -130,16 +92,8 @@ public class UserControllerImplTest {
     @Test
     public void deleteUserById_ShouldReturnHttpStatusNotFound() {
         User userEntity = new User();
-        userEntity.setUsername(username);
-        userEntity.setPassword(password);
-        userEntity.setFirstName(firstName);
-        userEntity.setLastName(lastName);
-        userEntity.setEmail(email);
-        userEntity.setAge(age);
-        userEntity.setCountry(country);
-        userEntity.setCity(city);
-        userEntity.setId(5L);
-        when(userServiceMock.UserIdExists(5L)).thenReturn(true);
+
+        when(userServiceMock.UserIdExists(userEntity.getId())).thenReturn(true);
 
         ResponseEntity result = userControllerImpl.deleteUserById(4L);
 
